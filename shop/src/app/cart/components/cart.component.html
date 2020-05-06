@@ -1,0 +1,21 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Cart</div>
+    <div *ngIf="cart.isEmpty; then emptyBlock else productsBlock"></div>
+    <ng-template #emptyBlock>
+        <p>Cart is empty!</p>
+    </ng-template>
+    <ng-template #productsBlock>
+        <div class="panel-body">
+            <ul>
+                <li *ngFor="let product of cart.products">
+                    <ul>
+                    <li>Action: {{product.name}}</li>
+                    <li>Priority: {{product.type}}</li>
+                    <li>Estimate Hours: {{product.weight}}</li>
+                    <li>Actual Hours: {{product.cost}}</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>            
+    </ng-template>
+</div>

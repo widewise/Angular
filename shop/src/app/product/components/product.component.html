@@ -1,0 +1,16 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Products</div>
+    <div class="panel-body">
+        <ul>
+            <li *ngFor="let product of products">
+                <ul>
+                <li>Action: {{product.name}}</li>
+                <li>Priority: {{product.type}}</li>
+                <li>Estimate Hours: {{product.weight}}</li>
+                <li>Actual Hours: {{product.cost}}</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <button (click)="onBuy()" >Buy</button>
+</div>
