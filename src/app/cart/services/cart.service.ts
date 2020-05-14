@@ -10,7 +10,7 @@ export class CartService {
   constructor() { }
 
   getCart(): CartModel {
-      var products = [
+      const products = [
         new ProductModel(1, 'Vivobook', ProductType.Notebook, 3, 500)
       ];
 

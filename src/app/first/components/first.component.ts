@@ -7,17 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FirstComponent implements OnInit {
 
-  public name : string;
+  public name: string;
   public description: string;
-  public price: number = 0;
+  public price = 0;
   public category: Category;
   public isAvailable: boolean;
 
   constructor() { }
 
   ngOnInit(): void {
-    this.name = "first";
-    this.description = "first";
+    this.name = 'first';
+    this.description = 'first';
     this.price = 10;
     this.category = Category.Mobile;
     this.isAvailable = true;
@@ -26,8 +26,8 @@ export class FirstComponent implements OnInit {
 
 export enum Category
 {
-  Mobile = "Mobile",
-  PC = "PC",
-  Monitor = "Monitor",
-  Network = "Network"
+  Mobile = 'Mobile',
+  PC = 'PC',
+  Monitor = 'Monitor',
+  Network = 'Network'
 }
