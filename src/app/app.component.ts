@@ -7,7 +7,7 @@ import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 })
 export class AppComponent implements AfterViewInit {
   @ViewChild('appTitle') titleField: ElementRef<HTMLInputElement>;
-  
+
   title = 'shop';
   ngAfterViewInit() {
     this.titleField.nativeElement.textContent = 'Shop title';

@@ -10,9 +10,9 @@ export class ProductModel {
 }
 
 export enum ProductType {
-    Notebook = "Notebook",
-    Mobile = "Mobile",
-    PC = "PC",
-    Monitor = "Monitor",
-    Network = "Network"
+    Notebook = 'Notebook',
+    Mobile = 'Mobile',
+    PC = 'PC',
+    Monitor = 'Monitor',
+    Network = 'Network'
 }

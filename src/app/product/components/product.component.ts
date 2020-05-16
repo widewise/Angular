@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, ElementRef, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
-import { ProductModel } from './../models/product.model'
+import { ProductModel } from './../models/product.model';
 
 @Component({
   selector: 'app-product',
@@ -8,9 +8,9 @@ import { ProductModel } from './../models/product.model'
 })
 export class ProductComponent implements OnChanges {
   @Input()
-  product : ProductModel;
+  product: ProductModel;
   @Input()
-  count : number;
+  count: number;
 
   @Output()
   buyProduct: EventEmitter<string> = new EventEmitter<string>();
@@ -23,17 +23,17 @@ export class ProductComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     for (const propName in changes) {
-      if(propName == "count")
+      if (propName === 'count')
       {
         const chng = changes[propName];
         const cur  = JSON.stringify(chng.currentValue);
-        if(cur == "0")
+        if (cur === '0')
         {
           this.buyButton.nativeElement.disabled = true;
         }
         else
         {
-          if(this.buyButton != undefined)
+          if (this.buyButton !== undefined)
           {
             this.buyButton.nativeElement.disabled = false;
           }

@@ -1,6 +1,15 @@
-import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy, ElementRef, ViewChild, OnChanges, SimpleChanges, AfterViewInit } from '@angular/core';
-import { CartModel } from '../models/cart.model'
-import { ProductService } from 'src/app/product/services/product.service';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ElementRef,
+  ViewChild,
+  OnChanges,
+  SimpleChanges,
+  AfterViewInit
+} from '@angular/core';
+import { CartModel } from '../models/cart.model';
 
 @Component({
   selector: 'app-cart-item',
@@ -12,14 +21,14 @@ export class CartItemComponent implements OnChanges, AfterViewInit {
   @Input()
   cart: CartModel;
   @Input()
-  count : number;
+  count: number;
 
   @Output()
   incrementProductCount: EventEmitter<CartModel> = new EventEmitter<CartModel>();
 
   @Output()
   decrementProductCount: EventEmitter<CartModel> = new EventEmitter<CartModel>();
-  
+
   @Output()
   deleteCart: EventEmitter<CartModel> = new EventEmitter<CartModel>();
 
@@ -30,7 +39,7 @@ export class CartItemComponent implements OnChanges, AfterViewInit {
   }
 
   onIncrementProductCount(): void {
-    this.incrementProductCount.emit(this.cart); 
+    this.incrementProductCount.emit(this.cart);
   }
 
   onDecrementProductCount(): void {
@@ -39,13 +48,12 @@ export class CartItemComponent implements OnChanges, AfterViewInit {
 
   onDeleteCart(): void {
     this.deleteCart.emit(this.cart);
-    console.log('Cart is deleted!')
+    console.log('Cart is deleted!');
   }
-  
+
   ngOnChanges(changes: SimpleChanges): void {
     for (const propName in changes) {
-      console.log(`propName=${propName}`);
-      if(propName == "count")
+      if (propName === 'count')
       {
         const chng = changes[propName];
         const cur  = Number(JSON.stringify(chng.currentValue));
@@ -54,17 +62,17 @@ export class CartItemComponent implements OnChanges, AfterViewInit {
     }
   }
 
-  checkCount (count: number) {
-    if(count <= 1)
+  checkCount(count: number) {
+    if (count <= 1)
     {
-      if(this.decrementButton != undefined)
+      if (this.decrementButton !== undefined)
       {
         this.decrementButton.nativeElement.disabled = true;
       }
     }
     else
     {
-      if(this.decrementButton != undefined)
+      if (this.decrementButton !== undefined)
       {
         this.decrementButton.nativeElement.disabled = false;
       }

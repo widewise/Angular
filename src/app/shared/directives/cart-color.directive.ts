@@ -1,13 +1,12 @@
-import { Directive, HostBinding, HostListener, Input } from '@angular/core';
+import { Directive, HostBinding, HostListener } from '@angular/core';
 
 @Directive({
   selector: '[appCartColor]'
 })
 export class CartColorDirective {
-  @HostBinding('class')
-  attrClass: string = 'leaveColor';
 
-  constructor() {}
+  @HostBinding('class')
+  attrClass = 'leaveColor';
 
   @HostListener('mouseenter', ['$event'])
   enter() {
@@ -18,5 +17,4 @@ export class CartColorDirective {
   leave() {
       this.attrClass = 'leaveColor';
   }
-  @Input('appBackGroundOnHover') backgroundColor: string;
 }

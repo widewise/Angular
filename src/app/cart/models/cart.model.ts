@@ -1,7 +1,7 @@
 export class CartModel {
 
     get isEmpty(): boolean {
-        return this.count == 0;
+        return this.count === 0;
     }
 
     constructor(

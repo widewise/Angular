@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { ProductModel } from './../models/product.model';
-import { ProductService } from './../services/product.service'
+import { ProductService } from './../services/product.service';
 import { CartService } from './../../cart/services/cart.service';
 
 @Component({
@@ -10,8 +10,8 @@ import { CartService } from './../../cart/services/cart.service';
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
-export class ProductListComponent {
-  products : Array<ProductModel>;
+export class ProductListComponent implements OnInit, OnDestroy {
+  products: Array<ProductModel>;
   private incrementSub: Subscription;
   private decrementSub: Subscription;
 
@@ -30,8 +30,8 @@ export class ProductListComponent {
   }
 
   incrementProductCount(productName: string): void {
-    const index = this.products.findIndex(x => x.name == productName);
-    if(index < 0)
+    const index = this.products.findIndex(x => x.name === productName);
+    if (index < 0)
     {
       throw Error(`Product ${productName} is not found.`);
     }
@@ -40,16 +40,16 @@ export class ProductListComponent {
   }
 
   decrementProductCount(productName: string): ProductModel {
-    const index = this.products.findIndex(x => x.name == productName);
-    if(index < 0)
+    const index = this.products.findIndex(x => x.name === productName);
+    if (index < 0)
     {
       throw Error(`Product ${productName} is not found.`);
     }
 
     const product = this.products[index];
-    if(product.count == 0)
+    if (product.count === 0)
     {
-      throw Error(`Product '${productName}' is finished.`)
+      throw Error(`Product '${productName}' is finished.`);
     }
     product.count--;
 
@@ -59,5 +59,10 @@ export class ProductListComponent {
   onBuyProduct(productName: string): void {
     const product = this.decrementProductCount(productName);
     this.cartService.addCart(product);
+  }
+
+  ngOnDestroy(): void {
+    this.incrementSub.unsubscribe();
+    this.decrementSub.unsubscribe();
   }
 }

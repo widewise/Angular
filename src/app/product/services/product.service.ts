@@ -19,7 +19,7 @@ export class ProductService {
     return [
       new ProductModel(1, 'Vivobook', ProductType.Notebook, 3, 500, 3),
       new ProductModel(2, 'Sony Xperia 5', ProductType.Mobile, 1, 300, 1),
-      new ProductModel(1, 'Samsung N24G1', ProductType.Monitor, 7, 700,5)
+      new ProductModel(1, 'Samsung N24G1', ProductType.Monitor, 7, 700, 5)
     ];
   }
 

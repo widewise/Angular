@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { CartService } from '../services/cart.service'
-import { CartModel } from '../models/cart.model'
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { CartService } from '../services/cart.service';
+import { CartModel } from '../models/cart.model';
 import { ProductModel } from './../../product/models/product.model';
 import { Subscription } from 'rxjs';
 import { ProductService } from '../../product/services/product.service';
@@ -11,7 +11,7 @@ import { ProductService } from '../../product/services/product.service';
   styleUrls: ['./cart-list.component.css']
 })
 
-export class CartListComponent implements OnInit {
+export class CartListComponent implements OnInit, OnDestroy {
   carts: Array<CartModel>;
   sum: number;
   private sub: Subscription;
@@ -29,8 +29,8 @@ export class CartListComponent implements OnInit {
   }
 
   addCart(product: ProductModel): void {
-    const index = this.carts.findIndex(x => x.productName == product.name);
-    if(index < 0)
+    const index = this.carts.findIndex(x => x.productName === product.name);
+    if (index < 0)
     {
       this.carts.push(new CartModel(product.name, product.cost, 1));
     }
@@ -60,7 +60,7 @@ export class CartListComponent implements OnInit {
       this.carts.splice(index, 1);
     }
 
-    for (let index = 0; index < cart.count; index++) {
+    for (let productIndex = 0; productIndex < cart.count; productIndex++) {
       this.productService.returnProduct(cart.productName);
     }
 

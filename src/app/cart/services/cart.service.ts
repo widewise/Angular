@@ -24,6 +24,6 @@ export class CartService {
   }
 
   getSum(carts: Array<CartModel>): number {
-    return carts.reduce((sum, cart) => sum + cart.count * cart.cost, 0)
+    return carts.reduce((sum, cart) => sum + cart.count * cart.cost, 0);
   }
 }
