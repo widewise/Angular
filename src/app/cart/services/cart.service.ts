@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
 
 import { CartModel } from './../models/cart.model';
 import { ProductModel, ProductType } from './../../product/models/product.model';
@@ -6,15 +7,23 @@ import { ProductModel, ProductType } from './../../product/models/product.model'
 @Injectable({
   providedIn: 'root'
 })
+
 export class CartService {
-  constructor() { }
 
-  getCart(): CartModel {
-      var products = [
-        new ProductModel(1, 'Vivobook', ProductType.Notebook, 3, 500)
-      ];
+  private channel = new Subject<ProductModel>();
+  public channel$ = this.channel.asObservable();
 
-      /*var products = new Array<ProductModel>();*/
-      return new CartModel(products);
+  getCarts(): Array<CartModel> {
+    return new Array<CartModel>(
+      new CartModel('Sony Xperia 5', 300, 1)
+    );
+  }
+
+  addCart(product: ProductModel) {
+    this.channel.next(product);
+  }
+
+  getSum(carts: Array<CartModel>): number {
+    return carts.reduce((sum, cart) => sum + cart.count * cart.cost, 0);
   }
 }
