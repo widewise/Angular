@@ -1,0 +1,10 @@
+:host.enterColor {
+    background: red;
+    display: block;
+    padding: 10px;
+  }
+:host.leaveColor {
+    background: gray;
+    display: block;
+    padding: 10px;
+  }

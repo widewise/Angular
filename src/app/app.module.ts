@@ -1,22 +1,22 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FirstComponent } from './first/components/first.component';
-import { ProductComponent } from './product/components/product.component';
-import { CartComponent } from './cart/components/cart.component';
+import { FirstModule } from './first/first.module';
+import { ProductModule } from './product/product.module';
+import { CartModule } from './cart/cart.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    FirstComponent,
-    ProductComponent,
-    CartComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FirstModule,
+    ProductModule,
+    CartModule
   ],
   providers: [],
   bootstrap: [AppComponent]

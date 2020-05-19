@@ -1,0 +1,12 @@
+<div class="panel panel-default">
+    <div class="panel-body">
+        <ul>
+            <li>Product name: {{cart.productName}}</li>
+            <li>Cost: {{cart.cost}}</li>
+            <li>Count: {{count}}</li>
+        </ul>
+        <button (click)="onIncrementProductCount()" >+</button>
+        <button #decrement (click)="onDecrementProductCount()" >-</button>
+        <button (click)="onDeleteCart()" >Delete</button>
+    </div>
+</div>

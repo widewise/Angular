@@ -1,0 +1,6 @@
+<app-product
+    *ngFor="let product of products"
+    [product]="product"
+    [count]="product.count"
+    (buyProduct)="onBuyProduct($event)">
+</app-product>

@@ -1,11 +1,11 @@
-import { ProductModel } from './../../product/models/product.model';
-
 export class CartModel {
 
     get isEmpty(): boolean {
-        return this.products.length == 0;
+        return this.count === 0;
     }
 
     constructor(
-        public products: Array<ProductModel>) { }
+        public productName: string,
+        public cost: number,
+        public count: number) { }
 }
