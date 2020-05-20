@@ -2,7 +2,7 @@
     <div class="panel-body">
         <ul>
             <li>Product name: {{cart.productName}}</li>
-            <li>Cost: {{cart.cost}}</li>
+            <li>Cost: {{cart.cost | currency: 'USD'}}</li>
             <li>Count: {{count}}</li>
         </ul>
         <button (click)="onIncrementProductCount()" >+</button>
