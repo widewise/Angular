@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CartColorDirective } from './directives/cart-color.directive';
+import { CartColorDirective, FontChangeDirective } from './directives';
 
-const comp = [CartColorDirective];
+const comp = [CartColorDirective, FontChangeDirective];
 @NgModule({
   imports: [CommonModule],
   declarations: [...comp],

@@ -1,8 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { CartService } from '../services/cart.service';
 import { CartModel } from '../models/cart.model';
-import { ProductModel } from './../../product/models/product.model';
-import { Subscription } from 'rxjs';
 import { ProductService } from '../../product/services/product.service';
 
 @Component({
@@ -11,63 +9,39 @@ import { ProductService } from '../../product/services/product.service';
   styleUrls: ['./cart-list.component.css']
 })
 
-export class CartListComponent implements OnInit, OnDestroy {
-  carts: Array<CartModel>;
-  sum: number;
-  private sub: Subscription;
+export class CartListComponent {
 
   constructor(
     private cartService: CartService,
     private productService: ProductService) { }
 
-  ngOnInit(): void {
-    this.carts = this.cartService.getCarts();
-    this.sum = this.cartService.getSum(this.carts);
-    this.sub = this.cartService.channel$.subscribe(
-      product => this.addCart(product)
-    );
+  get carts(): Array<CartModel> {
+    return this.cartService.getCartProducts();
   }
 
-  addCart(product: ProductModel): void {
-    const index = this.carts.findIndex(x => x.productName === product.name);
-    if (index < 0)
-    {
-      this.carts.push(new CartModel(product.name, product.cost, 1));
-    }
-    else
-    {
-      this.carts[index].count++;
-    }
+  get totalSum(): number {
+    return this.cartService.getTotalSum();
+  }
 
-    this.sum = this.cartService.getSum(this.carts);
+  get totalQuantity(): number {
+    return this.cartService.getTotalQuantity();
   }
 
   onIncrementProductCount(cart: CartModel): void {
     this.productService.buyMoreProduct(cart.productName);
-    cart.count++;
-    this.sum = this.cartService.getSum(this.carts);
+    this.cartService.increaseQuantity(cart);
   }
 
   onDecrementProductCount(cart: CartModel): void {
     this.productService.returnProduct(cart.productName);
-    cart.count--;
-    this.sum = this.cartService.getSum(this.carts);
+    this.cartService.decreaseQuantity(cart);
   }
 
   onDeleteCart(cart: CartModel): void {
-    const index = this.carts.indexOf(cart, 0);
-    if (index > -1) {
-      this.carts.splice(index, 1);
-    }
+    this.cartService.removeProduct(cart);
 
     for (let productIndex = 0; productIndex < cart.count; productIndex++) {
       this.productService.returnProduct(cart.productName);
     }
-
-    this.sum = this.cartService.getSum(this.carts);
-  }
-
-  ngOnDestroy() {
-    this.sub.unsubscribe();
   }
 }
