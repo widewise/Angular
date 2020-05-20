@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CartColorDirective, FontChangeDirective } from './directives';
+import { AboutComponent } from './components/about.component';
 
-const comp = [CartColorDirective, FontChangeDirective];
+const comp = [AboutComponent];
 @NgModule({
   imports: [CommonModule],
   declarations: [...comp],
   exports: [...comp]
 })
-export class SharedModule {}
+export class LayoutModule {}

@@ -58,7 +58,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   onBuyProduct(productName: string): void {
     const product = this.decrementProductCount(productName);
-    this.cartService.addCart(product);
+    this.cartService.addProduct(product);
   }
 
   ngOnDestroy(): void {
