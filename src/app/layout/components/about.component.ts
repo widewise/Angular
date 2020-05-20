@@ -1,22 +1,24 @@
 import { Component, Optional, Inject, OnInit } from '@angular/core';
 import { LocalStorageService } from '../../core/services/local-storage.service';
-import { 
+import {
   ConfigOptionsService,
+  ConstantsServiceToken,
   ConstantsService,
   GeneratorService,
   RandomString,
   GeneratorFactory
  } from '../../core';
 
-const constantsService = new ConstantsService("TaskManager", "1.0");
+const constantService = new ConstantsService('Shop', '1.0');
 
 @Component({
   selector: 'app-about',
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.css'],
   providers: [
+    GeneratorService,
     { provide: LocalStorageService, useClass: LocalStorageService },
-    { provide: ConstantsService, useValue: constantsService },
+    { provide: ConstantsServiceToken, useValue: constantService },
     { provide: RandomString, useFactory:  GeneratorFactory(3), deps: [GeneratorService] }
   ]
 })
@@ -27,8 +29,8 @@ export class AboutComponent implements OnInit{
   constructor(
     @Optional() private localStorageService: LocalStorageService,
     @Optional() private configOptionsService: ConfigOptionsService,
-    @Optional() private constantsService: ConstantsService,
-    @Inject(RandomString)@Optional() private randomString: string) { 
+    @Inject(ConstantsServiceToken)@Optional() private constantsService: ConstantsService,
+    @Inject(RandomString)@Optional() private randomString: string) {
       console.log(`RandomString = ${randomString}`);
     }
   ngOnInit(): void {

@@ -11,8 +11,7 @@ export class FontChangeDirective {
 
   @HostListener('click')
   click() {
-      const currentFont = this.el.nativeElement.font;
-      console.log(`Font = ${currentFont}`);
-      this.renderer.setStyle(this.el.nativeElement, 'font', currentFont * 2);
+      this.renderer.setStyle(this.el.nativeElement, 'fontSize', '40px');
   }
+
 }

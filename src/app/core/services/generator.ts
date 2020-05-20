@@ -31,8 +31,8 @@ export class GeneratorService {
       next() {
         if (cur <= last) {
           return { done: false, value: cur++ };
-        } 
-        else 
+        }
+        else
         {
           return { done: true };
         }

@@ -17,15 +17,15 @@ export class ConfigOptionsService {
   }
 
   setOptions(args: any) {
-    if("id" in args)
+    if ('id' in args)
     {
       this.options.id = args.id;
     }
-    if("login" in args)
+    if ('login' in args)
     {
       this.options.login = args.login;
     }
-    if("email" in args)
+    if ('email' in args)
     {
       this.options.email = args.email;
     }
