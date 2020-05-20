@@ -21,6 +21,8 @@ export class ProductComponent implements OnChanges {
     console.log('Product purchased!');
   }
 
+  // Не стоит так делать
+  // можно прото добавить <button [disabled]="!!count">
   ngOnChanges(changes: SimpleChanges): void {
     for (const propName in changes) {
       if (propName === 'count')
