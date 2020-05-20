@@ -1,5 +1,5 @@
 <app-product
-    *ngFor="let product of products"
+    *ngFor="let product of products$ | async"
     [product]="product"
     [count]="product.count"
     (buyProduct)="onBuyProduct($event)">

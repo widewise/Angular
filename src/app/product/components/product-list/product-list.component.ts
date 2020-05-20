@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
-import { ProductModel } from './../models/product.model';
-import { ProductService } from './../services/product.service';
-import { CartService } from './../../cart/services/cart.service';
+import { ProductModel } from './../../models/product.model';
+import { ProductService } from './../../services/product.service';
+import { CartService } from './../../../cart/services/cart.service';
 
 @Component({
   selector: 'app-product-list',
@@ -11,7 +11,7 @@ import { CartService } from './../../cart/services/cart.service';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit, OnDestroy {
-  products: Array<ProductModel>;
+  products$: Observable<Array<ProductModel>>;
   private incrementSub: Subscription;
   private decrementSub: Subscription;
 
@@ -20,7 +20,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
       private cartService: CartService) { }
 
   ngOnInit(): void {
-    this.products = this.productService.getProducts();
+    this.products$ = this.productService.getProducts();
     this.incrementSub = this.productService.incrementchannel$.subscribe(
       productName => this.incrementProductCount(productName)
     );
@@ -30,23 +30,12 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   incrementProductCount(productName: string): void {
-    const index = this.products.findIndex(x => x.name === productName);
-    if (index < 0)
-    {
-      throw Error(`Product ${productName} is not found.`);
-    }
-
-    this.products[index].count++;
+    const product = this.productService.getProduct(productName);
+    product.count++;
   }
 
   decrementProductCount(productName: string): ProductModel {
-    const index = this.products.findIndex(x => x.name === productName);
-    if (index < 0)
-    {
-      throw Error(`Product ${productName} is not found.`);
-    }
-
-    const product = this.products[index];
+    const product = this.productService.getProduct(productName);
     if (product.count === 0)
     {
       throw Error(`Product '${productName}' is finished.`);

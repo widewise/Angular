@@ -11,3 +11,10 @@ Task 2
  - in 'ProductService' added 'incrementChannel' and 'decrementChannel' channels and added 'getProducts', 'returnProduct' and 'buyMoreProduct' methods.
 4. Changed 'AppComponent'.
 5. Added 'CartColorDirective' directive.
+
+Task 4
+Pipes were applied to next components:
+ - ProductComponent: uppercase, currency
+ - ProductListComponent: async
+ - CartItemComponent: currency
+ - CartListComponent: orderBy

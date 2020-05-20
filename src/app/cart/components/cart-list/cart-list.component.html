@@ -3,7 +3,7 @@
     <div *ngIf="totalSum > 0; else emptyBlock" class="panel-body">
         <ul>
             <app-cart-item appCartColor
-                *ngFor="let cart of carts"
+                *ngFor="let cart of (carts | orderBy:'count':false)"
                 [cart]="cart"
                 [count]="cart.count"
                 (incrementProductCount)="onIncrementProductCount($event)"
