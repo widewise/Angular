@@ -9,7 +9,7 @@ import {
   SimpleChanges,
   AfterViewInit
 } from '@angular/core';
-import { CartModel } from '../models/cart.model';
+import { CartModel } from '../../models/cart.model';
 
 @Component({
   selector: 'app-cart-item',

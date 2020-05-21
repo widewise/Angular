@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, ElementRef, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
-import { ProductModel } from './../models/product.model';
+import { ProductModel } from './../../models/product.model';
 
 @Component({
   selector: 'app-product',

@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
-
-import { CartListComponent, CartItemComponent } from './components';
+import { CommonModule } from '@angular/common';
+import { AboutComponent } from './components/about.component';
 import { SharedModule } from '../shared/shared.module';
 
-const comp = [CartListComponent, CartItemComponent];
+const comp = [AboutComponent];
 @NgModule({
   imports: [
+    CommonModule,
     SharedModule
   ],
   declarations: [...comp],
   exports: [...comp]
 })
-export class CartModule {}
+export class LayoutModule {}
