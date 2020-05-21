@@ -20,6 +20,7 @@ export class CartService {
   }
 
   getTotalSum() {
+    // Наверное, тут и дальше можно задействовать updateCartData, ведь код одинаковый
     return this.cart.cartProducts.reduce((acc, cart) => acc + cart.count * cart.cost, 0);
   }
 
