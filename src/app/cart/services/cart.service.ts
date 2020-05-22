@@ -20,11 +20,13 @@ export class CartService {
   }
 
   getTotalSum() {
-    return this.cart.cartProducts.reduce((acc, cart) => acc + cart.count * cart.cost, 0);
+    this.updateCartData();
+    return this.cart.totalSum;
   }
 
   getTotalQuantity() {
-    return this.cart.cartProducts.reduce((acc, cart) => acc + cart.count, 0);
+    this.updateCartData();
+    return this.cart.totalQuantity;
   }
 
   addProduct(product: ProductModel) {
