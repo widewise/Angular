@@ -16,18 +16,7 @@ export class ConfigOptionsService {
     return this.options;
   }
 
-  setOptions(args: any) {
-    if ('id' in args)
-    {
-      this.options.id = args.id;
-    }
-    if ('login' in args)
-    {
-      this.options.login = args.login;
-    }
-    if ('email' in args)
-    {
-      this.options.email = args.email;
-    }
+  setOptions(args: Partial<ConfigOptionsModel>) {
+    this.options = {...this.options, ...args};
   }
 }
