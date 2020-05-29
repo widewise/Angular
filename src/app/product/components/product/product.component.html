@@ -6,8 +6,14 @@
             <li>Type: {{product.type | uppercase}}</li>
             <li>Weight: {{product.weight}}</li>
             <li>Cost: {{product.cost | currency: 'USD'}}</li>
-            <li>Count: {{count}}</li>
         </ul>
+        <button class="btn btn-warning btn-sm"
+            (click)="onView()">
+            View
+        </button>
+        <button class="btn btn-primary btn-sm"
+            (click)="onBuy()" #buy>
+            Buy
+        </button>
     </div>
-    <button (click)="onBuy()" #buy>Buy</button>
 </div>

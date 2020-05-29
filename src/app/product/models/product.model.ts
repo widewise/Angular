@@ -1,11 +1,10 @@
 export class ProductModel {
     constructor(
-        public id: number,
-        public name: string,
-        public type: ProductType,
-        public weight: number,
-        public cost: number,
-        public count: number
+        public id: number = null,
+        public name: string = '',
+        public type: ProductType = ProductType.Mobile,
+        public weight: number = 1,
+        public cost: number = 100
     ) {}
 }
 
