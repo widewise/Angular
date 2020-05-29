@@ -1,0 +1,22 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="pannel-title">
+            Process Order Form
+        </h4>
+    </div>
+    <div class="panel-body">
+        <form (ngSubmit)="onSaveOrder()" id="order-form" #form="ngForm">
+          <button
+              type="submit"
+              class="btn btn-primary"
+              form="order-form"
+              [disabled]="form.invalid" >Save
+          </button>
+          <button
+              type="button"   
+              class="btn btn-primary"
+              (click)="onGoBack()">Back
+          </button>
+        </form>
+    </div>
+</div>

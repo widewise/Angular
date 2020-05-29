@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AboutComponent } from './components/about.component';
+import { AboutComponent, LoginComponent } from './components';
 import { SharedModule } from '../shared/shared.module';
 
-const comp = [AboutComponent];
 @NgModule({
   imports: [
     CommonModule,
     SharedModule
   ],
-  declarations: [...comp],
-  exports: [...comp]
+  declarations: [
+    AboutComponent,
+    LoginComponent
+  ]
 })
 export class LayoutModule {}

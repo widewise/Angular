@@ -18,3 +18,10 @@ Pipes were applied to next components:
  - ProductListComponent: async
  - CartItemComponent: currency
  - CartListComponent: orderBy
+
+ Task 5.
+ 1. Create 'ProductFeature' area for routing products.
+ 2. Create 'AdminFeature' area for manage products and orders.
+ 3. Create 'Login' component for log in 'AdminFeature' area.
+ 4. Added create order form in products.
+ 5. Integrate localStorageService in CartService.

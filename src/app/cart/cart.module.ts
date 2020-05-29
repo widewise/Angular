@@ -1,14 +1,17 @@
 import { NgModule } from '@angular/core';
 
-import { CartListComponent, CartItemComponent } from './components';
+import { CartItemComponent } from './components';
 import { SharedModule } from '../shared/shared.module';
+import { CartRoutingModule } from './cart-routing.module';
 
-const comp = [CartListComponent, CartItemComponent];
 @NgModule({
   imports: [
-    SharedModule
+    SharedModule,
+    CartRoutingModule
   ],
-  declarations: [...comp],
-  exports: [...comp]
+  declarations: [
+    CartRoutingModule.components,
+    CartItemComponent
+  ]
 })
 export class CartModule {}
