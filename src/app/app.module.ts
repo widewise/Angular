@@ -1,12 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FirstModule } from './first/first.module';
 import { ProductModule } from './product/product.module';
 import { LayoutModule } from './layout/layout.module';
+import { httpInterceptorProviders } from './core/interceptors';
 
 @NgModule({
   declarations: [
@@ -17,9 +18,10 @@ import { LayoutModule } from './layout/layout.module';
     FirstModule,
     ProductModule,
     LayoutModule,
+    HttpClientModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule {
