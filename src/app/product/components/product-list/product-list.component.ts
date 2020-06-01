@@ -21,10 +21,11 @@ export class ProductListComponent implements OnInit {
     this.products = this.productService.getProducts();
   }
 
-  onBuyProduct(productName: string): void {
-    const product = this.productService.getProductByName(productName);
+  async onBuyProduct(productName: string) {
+    const product = await this.productService.getProductPromiseByName(productName);
     this.cartService.addProduct(product);
   }
+
   onViewProduct(product: ProductModel): void {
     const link = ['/product', product.id];
     this.router.navigate(link);

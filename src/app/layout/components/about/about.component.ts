@@ -7,6 +7,8 @@ import {
   RandomString,
   GeneratorFactory
  } from '../../../core';
+import { Observable } from 'rxjs';
+import { ConfigOptionsModel } from 'src/app/core/models/config-options.model';
 
 const constantService = new ConstantsService('Shop', '1.0');
 
@@ -23,6 +25,7 @@ const constantService = new ConstantsService('Shop', '1.0');
 export class AboutComponent implements OnInit{
   applicationName: string;
   version: string;
+  options$: Observable<ConfigOptionsModel>;
 
   constructor(
     @Optional() private configOptionsService: ConfigOptionsService,
@@ -33,5 +36,10 @@ export class AboutComponent implements OnInit{
   ngOnInit(): void {
     this.applicationName = this.constantsService.App;
     this.version = this.constantsService.Ver;
+    this.options$ = this.configOptionsService.getOptions();
+  }
+
+  onClearOptions(){
+    this.configOptionsService.clearOptions();
   }
 }

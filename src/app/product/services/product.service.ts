@@ -1,25 +1,24 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, forwardRef } from '@angular/core';
 
 import { ProductModel, ProductType } from './../models/product.model';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
-const productsList = [
-  new ProductModel(1, 'Vivobook', ProductType.Notebook, 3, 500),
-  new ProductModel(2, 'Sony Xperia 5', ProductType.Mobile, 1, 300),
-  new ProductModel(1, 'Samsung N24G1', ProductType.Monitor, 7, 700)
-];
-
-const productsListPromise = Promise.resolve(productsList);
+import { HttpClientService } from '../../core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-
-  constructor() { }
+  private productsUrl = 'http://localhost:3000/products';
+  httpClientService: HttpClientService;
+  constructor(
+    @Inject(forwardRef(() => HttpClientService)) httpClientService: HttpClientService
+  ) {
+    this.httpClientService = httpClientService;
+  }
 
   getProducts(): Promise<ProductModel[]> {
-    return productsListPromise;
+    return this.httpClientService.getPromiseArray<ProductModel>(this.productsUrl);
   }
 
   getProduct(id: number | string): Promise<ProductModel> {
@@ -29,34 +28,21 @@ export class ProductService {
   }
 
   getProductObservable(id: number | string): Observable<ProductModel> {
-    const index = productsList.findIndex(x => x.id === id);
-    if (index < 0)
-    {
-      return null;
-    }
-
-    return of(productsList[index]);
+    const url = `${this.productsUrl}/${id}`;
+    return this.httpClientService.getObservable<ProductModel>(url);
   }
 
-  getProductByName(productName: string): ProductModel {
-    const index = productsList.findIndex(x => x.name === productName);
-    if (index < 0)
-    {
-      throw Error(`Product ${productName} is not found.`);
-    }
-
-    return productsList[index];
+  async getProductPromiseByName(productName: string): Promise<ProductModel> {
+    const url = `${this.productsUrl}?name=${productName}`;
+    return await this.httpClientService.getPromise<ProductModel>(url);
   }
 
-  createProduct(product: ProductModel): void {
-    productsList.push(product);
+  createProduct(product: ProductModel) {
+    this.httpClientService.create<ProductModel>(this.productsUrl, product);
   }
 
-  updateProduct(product: ProductModel): void {
-    const i = productsList.findIndex(t => t.id === product.id);
-
-    if (i > -1) {
-      productsList.splice(i, 1, product);
-    }
+  updateProduct(product: ProductModel) {
+    const url = `${this.productsUrl}/${product.id}`;
+    this.httpClientService.update<ProductModel>(url, product);
   }
 }
