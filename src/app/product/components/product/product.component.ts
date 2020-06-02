@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ElementRef, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ElementRef, ViewChild } from '@angular/core';
 import { ProductModel } from './../../models/product.model';
 
 @Component({
@@ -6,7 +6,7 @@ import { ProductModel } from './../../models/product.model';
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css']
 })
-export class ProductComponent implements OnChanges {
+export class ProductComponent {
   @Input()
   product: ProductModel;
   @Input()
@@ -14,6 +14,8 @@ export class ProductComponent implements OnChanges {
 
   @Output()
   buyProduct: EventEmitter<string> = new EventEmitter<string>();
+  @Output()
+  viewProduct: EventEmitter<ProductModel> = new EventEmitter<ProductModel>();
   @ViewChild('buy') buyButton: ElementRef<HTMLButtonElement>;
 
   onBuy(): void {
@@ -21,24 +23,7 @@ export class ProductComponent implements OnChanges {
     console.log('Product purchased!');
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    for (const propName in changes) {
-      if (propName === 'count')
-      {
-        const chng = changes[propName];
-        const cur  = JSON.stringify(chng.currentValue);
-        if (cur === '0')
-        {
-          this.buyButton.nativeElement.disabled = true;
-        }
-        else
-        {
-          if (this.buyButton !== undefined)
-          {
-            this.buyButton.nativeElement.disabled = false;
-          }
-        }
-      }
-    }
+  onView(): void {
+    this.viewProduct.emit(this.product);
   }
 }

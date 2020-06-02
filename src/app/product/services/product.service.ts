@@ -1,49 +1,48 @@
-import { Injectable } from '@angular/core';
-import { Subject, Observable, of } from 'rxjs';
+import { Injectable, Inject, forwardRef } from '@angular/core';
 
 import { ProductModel, ProductType } from './../models/product.model';
+import { Observable } from 'rxjs';
 
-const productsList = [
-  new ProductModel(1, 'Vivobook', ProductType.Notebook, 3, 500, 3),
-  new ProductModel(2, 'Sony Xperia 5', ProductType.Mobile, 1, 300, 1),
-  new ProductModel(1, 'Samsung N24G1', ProductType.Monitor, 7, 700, 5)
-];
-
-const productsListObservable: Observable<Array<ProductModel>> = of(productsList);
+import { HttpClientService } from '../../core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  private incrementChannel = new Subject<string>();
-  public incrementchannel$ = this.incrementChannel.asObservable();
-
-  private decrementChannel = new Subject<string>();
-  public decrementchannel$ = this.decrementChannel.asObservable();
-
-  products$: Observable<ProductModel[]> = productsListObservable;
-
-  constructor() { }
-
-  getProducts(): Observable<ProductModel[]> {
-    return this.products$;
+  private productsUrl = 'http://localhost:3000/products';
+  httpClientService: HttpClientService;
+  constructor(
+    @Inject(forwardRef(() => HttpClientService)) httpClientService: HttpClientService
+  ) {
+    this.httpClientService = httpClientService;
   }
 
-  getProduct(productName: string): ProductModel {
-    const index = productsList.findIndex(x => x.name === productName);
-    if (index < 0)
-    {
-      throw Error(`Product ${productName} is not found.`);
-    }
-
-    return productsList[index];
+  getProducts(): Promise<ProductModel[]> {
+    return this.httpClientService.getPromiseArray<ProductModel>(this.productsUrl);
   }
 
-  returnProduct(productName: string) {
-    this.incrementChannel.next(productName);
+  getProduct(id: number | string): Promise<ProductModel> {
+    return this.getProducts()
+      .then(products => products.find(product => product.id === +id))
+      .catch(() => Promise.reject('Error in getProduct method'));
   }
 
-  buyMoreProduct(productName: string) {
-    this.decrementChannel.next(productName);
+  getProductObservable(id: number | string): Observable<ProductModel> {
+    const url = `${this.productsUrl}/${id}`;
+    return this.httpClientService.getObservable<ProductModel>(url);
+  }
+
+  async getProductPromiseByName(productName: string): Promise<ProductModel> {
+    const url = `${this.productsUrl}?name=${productName}`;
+    return await this.httpClientService.getPromise<ProductModel>(url);
+  }
+
+  createProduct(product: ProductModel) {
+    this.httpClientService.create<ProductModel>(this.productsUrl, product);
+  }
+
+  updateProduct(product: ProductModel) {
+    const url = `${this.productsUrl}/${product.id}`;
+    this.httpClientService.update<ProductModel>(url, product);
   }
 }

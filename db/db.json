@@ -1,0 +1,32 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Vivobook",
+      "type": "Notebook",
+      "weight": 2,
+      "cost": 500
+    },
+    {
+      "id": 2,
+      "name": "Sony Xperia 5",
+      "type": "Mobile",
+      "weight": 1,
+      "cost": 300
+    },
+    {
+      "id": 3,
+      "name": "Samsung N24G1",
+      "type": "Monitor",
+      "weight": 3,
+      "cost": 500
+    },
+    {
+      "id": 4,
+      "name": "Samsung Galaxy S10",
+      "type": "Mobile",
+      "weight": 1,
+      "cost": 500
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+<div>
+	<button class="btn btn-primary"
+		(click)="onCreateProduct()">New Product</button>
+	<br><br>
+    <app-product-item
+        *ngFor="let product of products | async"
+        [product]="product"
+        [count]="product.count"
+        (editProduct)="onEditProduct($event)">
+    </app-product-item>
+</div>

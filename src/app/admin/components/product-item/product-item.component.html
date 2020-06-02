@@ -1,0 +1,15 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Product</div>
+    <div class="panel-body">
+        <ul>
+            <li>Name: {{product.name}}</li>
+            <li>Type: {{product.type | uppercase}}</li>
+            <li>Weight: {{product.weight}}</li>
+            <li>Cost: {{product.cost | currency: 'USD'}}</li>
+        </ul>
+        <button class="btn btn-warning btn-sm"
+            (click)="onEdit()">
+            Edit
+        </button>
+    </div>
+</div>

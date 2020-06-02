@@ -1,5 +1,4 @@
 import { Component, Optional, Inject, OnInit } from '@angular/core';
-import { LocalStorageService } from '../../core/services/local-storage.service';
 import {
   ConfigOptionsService,
   ConstantsServiceToken,
@@ -7,7 +6,9 @@ import {
   GeneratorService,
   RandomString,
   GeneratorFactory
- } from '../../core';
+ } from '../../../core';
+import { Observable } from 'rxjs';
+import { ConfigOptionsModel } from 'src/app/core/models/config-options.model';
 
 const constantService = new ConstantsService('Shop', '1.0');
 
@@ -17,7 +18,6 @@ const constantService = new ConstantsService('Shop', '1.0');
   styleUrls: ['./about.component.css'],
   providers: [
     GeneratorService,
-    { provide: LocalStorageService, useClass: LocalStorageService },
     { provide: ConstantsServiceToken, useValue: constantService },
     { provide: RandomString, useFactory:  GeneratorFactory(3), deps: [GeneratorService] }
   ]
@@ -25,9 +25,9 @@ const constantService = new ConstantsService('Shop', '1.0');
 export class AboutComponent implements OnInit{
   applicationName: string;
   version: string;
+  options$: Observable<ConfigOptionsModel>;
 
   constructor(
-    @Optional() private localStorageService: LocalStorageService,
     @Optional() private configOptionsService: ConfigOptionsService,
     @Inject(ConstantsServiceToken)@Optional() private constantsService: ConstantsService,
     @Inject(RandomString)@Optional() private randomString: string) {
@@ -36,5 +36,10 @@ export class AboutComponent implements OnInit{
   ngOnInit(): void {
     this.applicationName = this.constantsService.App;
     this.version = this.constantsService.Ver;
+    this.options$ = this.configOptionsService.getOptions();
+  }
+
+  onClearOptions(){
+    this.configOptionsService.clearOptions();
   }
 }
