@@ -37,12 +37,12 @@ export class ProductService {
     return await this.httpClientService.getPromise<ProductModel>(url);
   }
 
-  createProduct(product: ProductModel) {
-    this.httpClientService.create<ProductModel>(this.productsUrl, product);
+  createProduct(product: ProductModel): Promise<ProductModel> {
+    return this.httpClientService.create<ProductModel>(this.productsUrl, product);
   }
 
-  updateProduct(product: ProductModel) {
+  updateProduct(product: ProductModel): Promise<ProductModel> {
     const url = `${this.productsUrl}/${product.id}`;
-    this.httpClientService.update<ProductModel>(url, product);
+    return this.httpClientService.update<ProductModel>(url, product);
   }
 }

@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { AdminDashboardComponent, ManageProductsComponent, ProductFormComponent, ManageOrdersComponent } from './components';
 import { AuthGuard } from './../core';
-import { ProductResolveGuard } from './guards';
+import { ProductsStatePreloadingGuard, ProductExistsGuard } from './../product/guards';
 
 const routes: Routes = [
   {
@@ -16,7 +16,11 @@ const routes: Routes = [
         path: '',
         canActivateChild: [AuthGuard],
         children: [
-          { path: 'products', component: ManageProductsComponent },
+          { 
+            path: 'products',
+            component: ManageProductsComponent,
+            canActivate: [ProductsStatePreloadingGuard],
+          },
           {
             path: 'product/add',
             component: ProductFormComponent
@@ -24,9 +28,7 @@ const routes: Routes = [
           {
             path: 'product/edit/:productID',
             component: ProductFormComponent,
-            resolve: {
-              product: ProductResolveGuard
-            }
+            canActivate: [ProductExistsGuard]
           },
           { path: 'orders', component: ManageOrdersComponent },
           { path: '', component: AdminDashboardComponent }

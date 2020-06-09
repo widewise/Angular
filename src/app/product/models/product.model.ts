@@ -1,4 +1,4 @@
-export class ProductModel {
+export class ProductModel implements Product {
     constructor(
         public id: number = null,
         public name: string = '',
@@ -14,4 +14,12 @@ export enum ProductType {
     PC = 'PC',
     Monitor = 'Monitor',
     Network = 'Network'
+}
+
+export interface Product {
+    id: number,
+    name: string,
+    type: ProductType,
+    weight: number,
+    cost: number
 }
