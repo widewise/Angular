@@ -1,9 +1,10 @@
 <div>
+    <p *ngIf="(productsError$ | async) as value">{{value}}</p>
 	<button class="btn btn-primary"
 		(click)="onCreateProduct()">New Product</button>
 	<br><br>
     <app-product-item
-        *ngFor="let product of products | async"
+        *ngFor="let product of (products$ | async)"
         [product]="product"
         [count]="product.count"
         (editProduct)="onEditProduct($event)">
