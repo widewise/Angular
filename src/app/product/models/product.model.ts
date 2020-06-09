@@ -17,9 +17,9 @@ export enum ProductType {
 }
 
 export interface Product {
-    id: number,
-    name: string,
-    type: ProductType,
-    weight: number,
-    cost: number
+    id: number;
+    name: string;
+    type: ProductType;
+    weight: number;
+    cost: number;
 }

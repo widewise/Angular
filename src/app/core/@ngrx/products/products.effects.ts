@@ -21,15 +21,7 @@ export class ProductsEffects implements OnInitEffects/*, OnRunEffects*/ {
     console.log('[PRODUCTS EFFECTS]');
   }
 
-  // Implement this interface to dispatch a custom action after the effect has been added.
-  // You can listen to this action in the rest of the application
-  // to execute something after the effect is registered.
-  ngrxOnInitEffects(): Action {
-    console.log('ngrxOnInitEffects is called');
-    return { type: '[ProductsEffects]: Init' };
-  }
-
-  // Implement the OnRunEffects interface to control the lifecycle 
+  // Implement the OnRunEffects interface to control the lifecycle
   // of the resolved effects.
   // ngrxOnRunEffects(resolvedEffects$: Observable<EffectNotification>) {
   //   return resolvedEffects$.pipe(
@@ -111,4 +103,12 @@ export class ProductsEffects implements OnInitEffects/*, OnRunEffects*/ {
       )
     );
   });
+
+  // Implement this interface to dispatch a custom action after the effect has been added.
+  // You can listen to this action in the rest of the application
+  // to execute something after the effect is registered.
+  ngrxOnInitEffects(): Action {
+    console.log('ngrxOnInitEffects is called');
+    return { type: '[ProductsEffects]: Init' };
+  }
   }

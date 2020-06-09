@@ -16,7 +16,7 @@ const routes: Routes = [
         path: '',
         canActivateChild: [AuthGuard],
         children: [
-          { 
+          {
             path: 'products',
             component: ManageProductsComponent,
             canActivate: [ProductsStatePreloadingGuard],

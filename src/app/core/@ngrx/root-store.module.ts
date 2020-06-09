@@ -18,27 +18,27 @@ import { routerReducers, CustomSerializer, RouterEffects } from './router';
   imports: [
     CommonModule,
     StoreModule.forRoot(routerReducers, {
-            metaReducers,
-        	  // All checks will automatically be disabled in production builds
-            runtimeChecks: {
-              strictStateImmutability: true,      // default value is true
-              strictActionImmutability: true,     // default value is true
-              // router state is not serializable
-              // set false if you don't use CustomSerializer
-              strictStateSerializability: false,   // default value is false
-              // router action is not serializable
-              // set false
-              strictActionSerializability: false,  // default value is false
-              strictActionWithinNgZone: true      // default value is false
-            }
-          }),
+      metaReducers,
+      // All checks will automatically be disabled in production builds
+      runtimeChecks: {
+        strictStateImmutability: true,      // default value is true
+        strictActionImmutability: true,     // default value is true
+        // router state is not serializable
+        // set false if you don't use CustomSerializer
+        strictStateSerializability: false,   // default value is false
+        // router action is not serializable
+        // set false
+        strictActionSerializability: false,  // default value is false
+        strictActionWithinNgZone: true      // default value is false
+      }
+    }),
     StoreRouterConnectingModule.forRoot({
       stateKey: 'router',
       routerState: RouterState.Minimal,
       serializer: CustomSerializer // has a priority over routerState
     }),
     EffectsModule.forRoot([RouterEffects]),
-    // Instrumentation must be imported after importing StoreModule (config is optional) 
+    // Instrumentation must be imported after importing StoreModule (config is optional)
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     ProductsStoreModule
   ]
