@@ -1,8 +1,8 @@
 <div>
     <p *ngIf="(productsError$ | async) as value">{{value}}</p>
 	<button class="btn btn-primary"
-		(click)="onCreateProduct()">New Product</button>
-	<br><br>
+        (click)="onCreateProduct()">New Product
+    </button>
     <app-product-item
         *ngFor="let product of (products$ | async)"
         [product]="product"
