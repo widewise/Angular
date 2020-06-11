@@ -1,6 +1,7 @@
 <div>
     <p *ngIf="(productsError$ | async) as value">{{value}}</p>
 	<button class="btn btn-primary"
+		(click)="onCreateProduct()">New Product</button>
         (click)="onCreateProduct()">New Product
     </button>
     <app-product-item
