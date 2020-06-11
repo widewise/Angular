@@ -8,6 +8,7 @@ import { FirstModule } from './first/first.module';
 import { ProductModule } from './product/product.module';
 import { LayoutModule } from './layout/layout.module';
 import { httpInterceptorProviders } from './core/interceptors';
+import { RootStoreModule } from './core/@ngrx/root-store.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { httpInterceptorProviders } from './core/interceptors';
     ProductModule,
     LayoutModule,
     HttpClientModule,
+    RootStoreModule,
     AppRoutingModule
   ],
   providers: [httpInterceptorProviders],
