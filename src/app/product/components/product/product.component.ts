@@ -13,13 +13,13 @@ export class ProductComponent {
   count: number;
 
   @Output()
-  buyProduct: EventEmitter<string> = new EventEmitter<string>();
+  buyProduct: EventEmitter<ProductModel> = new EventEmitter<ProductModel>();
   @Output()
   viewProduct: EventEmitter<ProductModel> = new EventEmitter<ProductModel>();
   @ViewChild('buy') buyButton: ElementRef<HTMLButtonElement>;
 
   onBuy(): void {
-    this.buyProduct.emit(this.product.name);
+    this.buyProduct.emit(this.product);
     console.log('Product purchased!');
   }
 
