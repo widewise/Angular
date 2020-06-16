@@ -5,18 +5,128 @@
         </h4>
     </div>
     <div class="panel-body">
-        <form (ngSubmit)="onSaveOrder()" id="order-form" #form="ngForm">
-          <button
-              type="submit"
-              class="btn btn-primary"
-              form="order-form"
-              [disabled]="form.invalid" >Save
-          </button>
-          <button
-              type="button"   
-              class="btn btn-primary"
-              (click)="onGoBack()">Back
-          </button>
+        <form class="form-horizontal"
+            (ngSubmit)="onSave()"
+            [formGroup]="userForm">
+            <fieldset>
+                <div class="form-group"
+                    [ngClass]="{'has-error': validationMessages['firstName']}">
+                    <label class="col-md-2 control-label"
+                        for="firstNameId">First Name</label>
+                    <div class="col-md-8">
+                        <input class="form-control"
+                            id="firstNameId"
+                            type="text"
+                            placeholder={{placeholder.firstName}}
+                            formControlName="firstName"/>
+                            <span class="help-block" *ngIf="validationMessages['firstName']">
+                                {{ validationMessages['firstName'] }}
+                            </span>
+                        </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label"
+                        for="lastNameId">Last Name</label>
+                    <div class="col-md-8">
+                        <input class="form-control"
+                               id="lastNameId"
+                               type="text"
+                               placeholder={{placeholder.lastName}}
+                               formControlName="lastName"/>
+                    </div>
+                </div>
+
+                <div class="form-group"
+                [ngClass]="{'has-error': validationMessages['email']}">
+                    <label class="col-md-2 control-label"
+                        for="emailId">Email</label>
+
+                    <div class="col-md-8">
+                        <input class="form-control"
+                               id="emailId"
+                               type="email"
+                               placeholder={{placeholder.email}}
+                               formControlName="email"
+                               appAsyncEmailValidator
+                               (blur)="onBlur()" />
+                        <span class="help-block" *ngIf="validationMessages['email']">
+                            {{ validationMessages['email'] }}
+                        </span>
+                    </div>
+                </div>
+
+                <div formArrayName="phones">
+                    <div *ngFor="let phone of phones.controls; let i = index" [formGroupName]="i">
+                        <div class="form-group">    
+                            <label class="col-md-2 control-label"
+                                attr.for="{{'phoneId' + i}}">Phone {{i+1}}</label>
+                            <div class="col-md-7">
+                                <input class="form-control"
+                                    id="{{'phoneId' + i}}"
+                                    type="text"
+                                    placeholder={{placeholder.phone}}
+                                    formControlName="phone"/>
+                            </div>
+                            <div class="col-md-1 text-right" *ngIf="i>0">
+                                <button class="btn btn-danger" (click)="onRemoveAddress(i)">X</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4 col-md-offset-2">
+                      <button class="btn btn-primary"
+                              type="button"
+                              (click)="onAddPhone()">
+                        Add Another Phone
+                      </button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-1 col-md-8 checkbox" >
+                        <label>
+                            <input id="isCollectId"
+                                   type="checkbox" 
+                                   formControlName="isCollect">
+                                Is Click & Collect
+                        </label>
+                    </div>
+                </div>
+    
+                <div *ngIf="!userForm.get('isCollect').value">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"
+                            for="addressId">Address</label>
+                        <div class="col-md-8">
+                            <input class="form-control"
+                                id="addressId"
+                                type="textarea"
+                                placeholder={{placeholder.address}}
+                                formControlName="address"/>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="form-group">
+                    <div class="col-md-4 col-md-offset-2">
+                        <span>
+                            <button class="btn btn-primary"
+                                    type="submit"
+                                    [disabled]="!userForm.valid">
+                                Save
+                            </button>
+                            <button class="btn btn-primary"
+                                    type="button"
+                                    (click)="onGoBack()">Back
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </fieldset>
         </form>
     </div>
 </div>
+<br>Value: {{ userForm.value | json }}
