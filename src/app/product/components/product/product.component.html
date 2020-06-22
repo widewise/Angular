@@ -2,10 +2,10 @@
     <div class="panel-heading">Product</div>
     <div class="panel-body">
         <ul>
-            <li>Name: {{product.name}}</li>
-            <li>Type: {{product.type | uppercase}}</li>
-            <li>Weight: {{product.weight}}</li>
-            <li>Cost: {{product.cost | currency: 'USD'}}</li>
+            <li class="name">Name: {{product.name}}</li>
+            <li class="type">Type: {{product.type | uppercase}}</li>
+            <li class="weight">Weight: {{product.weight}}</li>
+            <li class="cost">Cost: {{product.cost | currency: 'USD'}}</li>
         </ul>
         <button class="btn btn-warning btn-sm"
             (click)="onView()">

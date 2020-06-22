@@ -1,5 +1,5 @@
 <h2 appFontChange>About</h2>
-<p>Application: {{applicationName}} (Version: {{version}})</p>
-<p>Options login: {{(options$ | async).login}}</p>
-<p>Options email: {{(options$ | async).email}}</p>
-<button (click)="onClearOptions()" >Clear options</button>
+<p class="title">Application: {{applicationName}} (Version: {{version}})</p>
+<p class="login">Options login: {{(options$ | async).login}}</p>
+<p class="email">Options email: {{(options$ | async).email}}</p>
+<button  class="btn btn-warning btn-sm" (click)="onClearOptions()" >Clear options</button>
