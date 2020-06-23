@@ -14,7 +14,7 @@ export class ProductComponent {
   buyProduct: EventEmitter<ProductModel> = new EventEmitter<ProductModel>();
   @Output()
   viewProduct: EventEmitter<ProductModel> = new EventEmitter<ProductModel>();
-  @ViewChild('buy') buyButton: ElementRef<HTMLButtonElement>;
+  @ViewChild('buy') buyButton: ElementRef<HTMLButtonElement>; // не используется?
 
   onBuy(): void {
     this.buyProduct.emit(this.product);
