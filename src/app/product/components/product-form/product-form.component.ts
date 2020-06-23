@@ -1,43 +1,52 @@
-import { Component, OnInit } from '@angular/core';
-import { switchMap } from 'rxjs/operators';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Store, select } from '@ngrx/store';
 import { ProductModel } from '../../models/product.model';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { ProductService } from '../../services/product.service';
+import { AppState, selectSelectedProductByUrl } from './../../../core/@ngrx';
+import * as RouterActions from './../../../core/@ngrx/router/router.actions';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   templateUrl: './product-form.component.html',
   styleUrls: ['./product-form.component.css']
 })
-export class ProductFormComponent implements OnInit {
+export class ProductFormComponent implements OnInit, OnDestroy {
   product: ProductModel;
+  private componentDestroyed$: Subject<void> = new Subject<void>();
 
   constructor(
-    private productService: ProductService,
-    private router: Router,
-    private route: ActivatedRoute) {}
+    private store: Store<AppState>
+    ) {}
 
   ngOnInit(): void {
-    this.product = new ProductModel();
-
-    const observer = {
-      next: (product: ProductModel) => (this.product = { ...product }),
-      error: (err: any) => console.log(err)
+    const observer: any = {
+      next: (product: ProductModel) => {
+        this.product = {...product};
+      },
+      error(err) {
+        console.log(err);
+      },
+      complete() {
+        console.log('Stream is completed');
+      }
     };
-    this.route.paramMap
+
+    this.store
       .pipe(
-        switchMap((params: ParamMap) => this.productService.getProduct(+params.get('productID'))))
+        select(selectSelectedProductByUrl),
+        takeUntil(this.componentDestroyed$)
+      )
       .subscribe(observer);
   }
 
-  onSaveProduct() {
-    const product = { ...this.product } as ProductModel;
-
-    this.productService.updateProduct(product);
-
-    this.onGoBack();
+  ngOnDestroy(): void {
+    this.componentDestroyed$.next();
+    this.componentDestroyed$.complete();
   }
 
   onGoBack(): void {
-    this.router.navigate(['/products-list']);
+    this.store.dispatch(RouterActions.go({
+      path: ['/products-list']
+    }));
   }
 }

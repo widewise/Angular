@@ -9,7 +9,8 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ConfigOptionsService {
-  private configOptionsKey = 'ConfigOptions';
+  static configOptionsKey = 'ConfigOptions';
+  static appSettingUrl = 'assets/app-settings.json';
   private localStotageService: LocalStorageService;
 
   constructor(
@@ -20,7 +21,7 @@ export class ConfigOptionsService {
   }
 
   getOptions(): Observable<ConfigOptionsModel> {
-    const options = this.localStotageService.getItem(this.configOptionsKey) as ConfigOptionsModel;
+    const options = this.localStotageService.getItem(ConfigOptionsService.configOptionsKey) as ConfigOptionsModel;
     console.log('options: ' + options);
     if (options)
     {
@@ -29,17 +30,20 @@ export class ConfigOptionsService {
 
     const observer = {
       next: val => {
-        this.localStotageService.setItem(this.configOptionsKey, val);
+        this.localStotageService.setItem(ConfigOptionsService.configOptionsKey, val);
         console.log(`Setted options from app-settings.json: ${val}`);
       },
       error: val => {
         console.log(`${val}: Retried 2 times then set default options!`);
-        this.localStotageService.setItem(this.configOptionsKey, new ConfigOptionsModel(0, 'default_login', 'default_email'));
+        this.localStotageService.setItem(
+          ConfigOptionsService.configOptionsKey,
+          new ConfigOptionsModel(0, 'default_login', 'default_email')
+        );
       }
     };
 
     const opt = this.http
-    .get<ConfigOptionsModel>('assets/app-settings.json')
+    .get<ConfigOptionsModel>(ConfigOptionsService.appSettingUrl)
     .pipe(
       retry(2)
     );
@@ -49,10 +53,10 @@ export class ConfigOptionsService {
   }
 
   setOptions(args: Partial<ConfigOptionsModel>) {
-    this.localStotageService.setItem(this.configOptionsKey, args);
+    this.localStotageService.setItem(ConfigOptionsService.configOptionsKey, args);
   }
 
   clearOptions(){
-    this.localStotageService.removeItem(this.configOptionsKey);
+    this.localStotageService.removeItem(ConfigOptionsService.configOptionsKey);
   }
 }

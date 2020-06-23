@@ -34,12 +34,12 @@ export class CartService {
     );
   }
 
-  getTotalSum() {
+  getTotalSum(): number {
     this.updateCartData();
     return this.cart.totalSum;
   }
 
-  getTotalQuantity() {
+  getTotalQuantity(): number {
     this.updateCartData();
     return this.cart.totalQuantity;
   }

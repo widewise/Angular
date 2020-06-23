@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { pluck } from 'rxjs/operators';
-import { ProductModel } from '../../../product/models/product.model';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { ProductService } from '../../../product/services/product.service';
+import { AppState, selectSelectedProductByUrl } from './../../../core/@ngrx';
+import * as ProductsActions from './../../../core/@ngrx/products/products.actions';
+import { Store, select } from '@ngrx/store';
+// rxjs
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import * as RouterActions from './../../../core/@ngrx/router/router.actions';
+import { ProductModel, Product } from '../../../product/models/product.model';
 
 @Component({
   templateUrl: './product-form.component.html',
@@ -10,34 +14,45 @@ import { ProductService } from '../../../product/services/product.service';
 })
 export class ProductFormComponent implements OnInit {
   product: ProductModel;
-  originalProduct: ProductModel;
+  private componentDestroyed$: Subject<void> = new Subject<void>();
 
   constructor(
-    private productService: ProductService,
-    private router: Router,
-    private route: ActivatedRoute) {}
+    private store: Store<AppState>
+  ) {}
 
   ngOnInit(): void {
-    this.route.data.pipe(pluck('product')).subscribe((product: ProductModel) => {
-      this.product = { ...product };
-      this.originalProduct = { ...product };
-    });
-  }
+    const observer: any = {
+      next: (product: ProductModel) => {
+        this.product = {...product};
+      },
+      error(err) {
+        console.log(err);
+      },
+      complete() {
+        console.log('Stream is completed');
+      }
+    };
+
+    this.store
+      .pipe(
+        select(selectSelectedProductByUrl),
+        takeUntil(this.componentDestroyed$)
+      )
+      .subscribe(observer);  }
 
   onSaveProduct() {
     const product = { ...this.product } as ProductModel;
 
     if (product.id) {
-      this.productService.updateProduct(product);
-      this.router.navigate(['/admin/products', {editedProductID: product.id}]);
+      this.store.dispatch(ProductsActions.updateProduct({ product }));
     } else {
-      this.productService.createProduct(product);
-      this.onGoBack();
+      this.store.dispatch(ProductsActions.createProduct({ product }));
     }
-    this.originalProduct = {...this.product};
   }
 
   onGoBack(): void {
-    this.router.navigate(['/admin/products']);
+    this.store.dispatch(RouterActions.go({
+      path: ['/admin/products']
+    }));
   }
 }
