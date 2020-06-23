@@ -12,6 +12,7 @@ export class ProductService {
   private productsUrl = 'http://localhost:3000/products';
   httpClientService: HttpClientService;
   constructor(
+    // просто попробовать @Inject и forwardRef?
     @Inject(forwardRef(() => HttpClientService)) httpClientService: HttpClientService
   ) {
     this.httpClientService = httpClientService;

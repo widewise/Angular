@@ -104,6 +104,7 @@ export class ProcessOrderComponent implements OnInit, OnDestroy {
   }
 
   private buildPhone(): FormGroup {
+    // тут не обязательно группу создавать, можно и контрол дублировать
     return this.fb.group({
       phone: ''
     });
